@@ -10,9 +10,11 @@ gem "bootsnap", require: false
 gem 'devise' # Needed due to rails 7
 gem 'devise_token_auth', github: 'lynndylanhurley/devise_token_auth', branch: 'master'
 gem "rack-cors"
+gem 'webauthn'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "byebug", "~> 11.1"
 end
 
 group :development do

@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
+
+  has_many :webauthn_credentials, dependent: :destroy
+
+  validates :webauthn_id, uniqueness: true
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_31_091445) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_27_121405) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,10 +36,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_31_091445) do
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "webauthn_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
+    t.index ["webauthn_id"], name: "index_users_on_webauthn_id", unique: true
   end
 
+  create_table "webauthn_credentials", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "external_id", null: false
+    t.string "public_key", null: false
+    t.integer "sign_count", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["external_id", "user_id"], name: "index_webauthn_credentials_on_external_id_and_user_id", unique: true
+    t.index ["user_id"], name: "index_webauthn_credentials_on_user_id"
+  end
+
+  add_foreign_key "webauthn_credentials", "users"
 end

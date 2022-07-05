@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  namespace :api do
+  namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      mount_devise_token_auth_for 'User', at: 'auth'
+      mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+        sessions: 'api/v1/overrides/sessions'
+      }
       namespace :webauthn do
-        resources :credentials, only: [:create]
-        resources :challenges, only: [:create]
+        resources :credentials, only: %i[index create destroy]
+        resources :challenges, only: %i[create]
       end
     end
   end

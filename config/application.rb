@@ -23,13 +23,10 @@ module RailsGraphql
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    # This also configures session_options for use below
-    config.session_store :cookie_store, key: '_interslice_session'
-
     # Required for all session management (regardless of session_store)
     config.middleware.use ActionDispatch::Cookies
-
-    config.middleware.use config.session_store, config.session_options
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.cookie_enabled = true
 
 
     # Configuration for the application, engines, and railties goes here.

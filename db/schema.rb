@@ -48,10 +48,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_27_121405) do
     t.bigint "user_id", null: false
     t.string "external_id", null: false
     t.string "public_key", null: false
+    t.string "name", null: false
     t.integer "sign_count", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["external_id", "user_id"], name: "index_webauthn_credentials_on_external_id_and_user_id", unique: true
+    t.index ["name", "external_id", "user_id"], name: "index_webauthn_credentials_on_name_and_external_id_and_user_id", unique: true
     t.index ["user_id"], name: "index_webauthn_credentials_on_user_id"
   end
 

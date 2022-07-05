@@ -14,7 +14,7 @@ class Api::V1::Webauthn::ChallengesController < Api::V1::ApplicationController
     )
 
     # Generate the challenge and save it into the session
-    # session[:webauthn_credential_register_challenge] = create_options.challenge
+    session[:webauthn_credential_register_challenge] = create_options.challenge
 
     render json: create_options
   end

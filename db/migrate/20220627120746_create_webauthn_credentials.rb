@@ -4,10 +4,11 @@ class CreateWebauthnCredentials < ActiveRecord::Migration[7.0]
       t.references :user, null: false, foreign_key: true
       t.string :external_id, null: false
       t.string :public_key, null: false
+      t.string :name, null: false
       t.integer :sign_count, null: false
 
       t.timestamps
     end
-    add_index :webauthn_credentials, %i[external_id user_id], unique: true
+    add_index :webauthn_credentials, %i[name external_id user_id], unique: true
   end
 end

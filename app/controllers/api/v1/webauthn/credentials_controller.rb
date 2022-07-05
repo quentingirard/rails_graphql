@@ -10,13 +10,9 @@ class Api::V1::Webauthn::CredentialsController < Api::V1::ApplicationController
     webauthn_credential = WebAuthn::Credential.from_create(params[:credential])
 
     begin
-      puts '####################################################'
-      puts '####################################################'
-      puts '####################################################'
-      puts '####################################################'
-      puts session.inspect
       # Validate the challenge
-      webauthn_credential.verify(session[:webauthn_credential_register_challenge])
+      challenge = $redis.hget(current_api_v1_user.id, 'webauthn_credential_register_challenge')
+      webauthn_credential.verify(challenge)
 
       # The validation would raise WebAuthn::Error so if we are here, the credentials are valid, and we can save it
       credential = current_api_v1_user.webauthn_credentials.new(
@@ -34,7 +30,7 @@ class Api::V1::Webauthn::CredentialsController < Api::V1::ApplicationController
     rescue WebAuthn::Error => e
       render json: { error: "Verification failed: #{e.message}" }
     ensure
-      session.delete(:webauthn_credential_register_challenge)
+      $redis.hdel(current_api_v1_user.id, 'webauthn_credential_register_challenge')
     end
   end
 

@@ -19,6 +19,7 @@ class Api::V1::Overrides::SessionsController < DeviseTokenAuth::SessionsControll
 
       if @resource.webauthn_credentials.present?
         get_options = WebAuthn::Credential.options_for_get(allow: @resource.webauthn_credentials.pluck(:external_id))
+        $redis.hmset(@resource.id, 'authentication_challenge', get_options.challenge)
         render json: get_options
       else
         create_and_assign_token
@@ -26,7 +27,6 @@ class Api::V1::Overrides::SessionsController < DeviseTokenAuth::SessionsControll
         yield @resource if block_given?
         render_create_success
       end
-
 
     elsif @resource && !(!@resource.respond_to?(:active_for_authentication?) || @resource.active_for_authentication?)
       if @resource.respond_to?(:locked_at) && @resource.locked_at

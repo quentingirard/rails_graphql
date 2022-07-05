@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       namespace :webauthn do
         resources :credentials, only: %i[index create destroy]
         resources :challenges, only: %i[create]
+        resources :authentications, only: %i[create]
       end
     end
   end

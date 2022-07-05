@@ -12,6 +12,10 @@ gem 'devise_token_auth', github: 'lynndylanhurley/devise_token_auth', branch: 'm
 gem "rack-cors"
 gem 'webauthn'
 
+# Redis
+gem 'redis'
+gem 'redis-namespace'
+
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "byebug", "~> 11.1"

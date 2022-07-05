@@ -26,8 +26,6 @@ module RailsGraphql
     # Required for all session management (regardless of session_store)
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
-    config.cookie_enabled = true
-
 
     # Configuration for the application, engines, and railties goes here.
     #

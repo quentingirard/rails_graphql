@@ -180,6 +180,9 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    redis (4.7.1)
+    redis-namespace (1.8.2)
+      redis (>= 3.0.4)
     reline (0.3.1)
       io-console (~> 0.5)
     responders (3.0.1)
@@ -225,6 +228,8 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.3)
+  redis
+  redis-namespace
   tzinfo-data
   webauthn
 
@@ -232,4 +237,4 @@ RUBY VERSION
    ruby 3.0.3p157
 
 BUNDLED WITH
-   2.3.10
+   2.3.17
